@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de Parceria - Health Tech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 24px;
+            height: 24px;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Oculta os spinners de input[type=number] */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen p-4 py-8">
+
+    <div class="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800">Solicitação de Parceria</h1>
+            <p class="text-slate-500 mt-2">Preencha o formulário abaixo para enviar sua solicitação.</p>
+        </div>
+
+        <!-- Mensagens de Feedback -->
+        <div id="success-message" class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg mb-6" role="alert">
+            <p class="font-bold">Solicitação Enviada com Sucesso!</p>
+            <p>Recebemos seus dados. Entraremos em contato em breve. Obrigado!</p>
+        </div>
+        <div id="error-message" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-6" role="alert">
+            <p id="error-text" class="font-bold">Erro no Envio</p>
+            <p id="error-subtext">Não foi possível enviar a solicitação. Verifique a configuração e tente novamente.</p>
+        </div>
+
+        <!-- Formulário de Parceria -->
+        <form id="form-parceria">
+            <div class="space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nome" class="block text-sm font-medium text-slate-700 mb-1">Nome Completo <span class="text-red-500">*</span></label>
+                        <input type="text" id="nome" name="nome" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" name="email" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="crm" class="block text-sm font-medium text-slate-700 mb-1">CRM (com UF) <span class="text-red-500">*</span></label>
+                    <input type="text" id="crm" name="crm" placeholder="Ex: 123456/SP" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Trabalha com injetáveis? <span class="text-red-500">*</span></label>
+                        <div class="mt-2 flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="trabalha-injetaveis" value="Sim" class="text-sky-600 focus:ring-sky-500">
+                                <span class="ml-2 text-sm text-slate-700">Sim</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="trabalha-injetaveis" value="Não" class="text-sky-600 focus:ring-sky-500">
+                                <span class="ml-2 text-sm text-slate-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+                     <div>
+                        <label class="block text-sm font-medium text-slate-700">Compra atualmente com algum outro laboratório?</label>
+                        <div class="mt-2 flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="compra-outro-lab" value="Sim" class="text-sky-600 focus:ring-sky-500">
+                                <span class="ml-2 text-sm text-slate-700">Sim</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="compra-outro-lab" value="Não" class="text-sky-600 focus:ring-sky-500">
+                                <span class="ml-2 text-sm text-slate-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="linha-tratamento" class="block text-sm font-medium text-slate-700 mb-1">Qual a linha de tratamento realiza?</label>
+                    <textarea id="linha-tratamento" name="linha-tratamento" rows="3" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+                </div>
+
+                <div>
+                    <label for="objetivo-parceria" class="block text-sm font-medium text-slate-700 mb-1">Qual o objetivo da parceria com a HT? <span class="text-red-500">*</span></label>
+                    <textarea id="objetivo-parceria" name="objetivo-parceria" rows="3" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+                </div>
+
+                <div>
+                    <label for="redes-sociais" class="block text-sm font-medium text-slate-700 mb-1">Quais as redes sociais? (Ex: @seu.instagram)</label>
+                    <input type="text" id="redes-sociais" name="redes-sociais" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Realiza mentoria ou cursos?</label>
+                    <div class="mt-2 flex gap-4">
+                        <label class="flex items-center">
+                            <input type="radio" id="mentoria-sim" name="realiza-mentoria" value="Sim" class="text-sky-600 focus:ring-sky-500">
+                            <span class="ml-2 text-sm text-slate-700">Sim</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" id="mentoria-nao" name="realiza-mentoria" value="Não" class="text-sky-600 focus:ring-sky-500" checked>
+                            <span class="ml-2 text-sm text-slate-700">Não</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Campos Condicionais de Mentoria -->
+                <div id="mentoria-detalhes" class="space-y-6 bg-slate-50 p-4 rounded-md hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="qtd-alunos" class="block text-sm font-medium text-slate-700 mb-1">Se sim, quantos alunos?</label>
+                            <input type="number" id="qtd-alunos" name="qtd-alunos" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        </div>
+                        <div>
+                            <label for="periodicidade-aulas" class="block text-sm font-medium text-slate-700 mb-1">Qual a periodicidade das aulas?</label>
+                            <input type="text" id="periodicidade-aulas" name="periodicidade-aulas" class="block w-full px-4 py-2 text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">É speaker ou tem parceria com algum outro laboratório?</label>
+                    <div class="mt-2 flex gap-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="e-speaker" value="Sim" class="text-sky-600 focus:ring-sky-500">
+                            <span class="ml-2 text-sm text-slate-700">Sim</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="e-speaker" value="Não" class="text-sky-600 focus:ring-sky-500">
+                            <span class="ml-2 text-sm text-slate-700">Não</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <button type="submit" id="submit-button" class="w-full bg-sky-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-all flex items-center justify-center">
+                    <span id="button-text">Enviar Solicitação</span>
+                    <div id="loader" class="loader hidden"></div>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // --- CONFIGURAÇÃO ---
+        // !!! IMPORTANTE !!!
+        // COLE A URL DO SEU GOOGLE APPS SCRIPT AQUI (a mesma de antes, ou uma nova se preferir)
+        const GOOGLE_APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKS7QNAEv1yGpMNB4hEAx8M-omCucQT6qUa5LK-dgATo2HwugeSjwe_xcaFPJk3pOf/exec'; 
+        // --------------------
+
+        // Lógica para campos condicionais
+        const mentoriaSim = document.getElementById('mentoria-sim');
+        const mentoriaNao = document.getElementById('mentoria-nao');
+        const mentoriaDetalhes = document.getElementById('mentoria-detalhes');
+
+        mentoriaSim.addEventListener('change', () => {
+            if (mentoriaSim.checked) {
+                mentoriaDetalhes.classList.remove('hidden');
+            }
+        });
+
+        mentoriaNao.addEventListener('change', () => {
+            if (mentoriaNao.checked) {
+                mentoriaDetalhes.classList.add('hidden');
+                // Limpa os campos quando escondidos
+                document.getElementById('qtd-alunos').value = '';
+                document.getElementById('periodicidade-aulas').value = '';
+            }
+        });
+
+        function showAlert(title, message) {
+            const errorMsg = document.getElementById('error-message');
+            document.getElementById('error-text').textContent = title;
+            document.getElementById('error-subtext').textContent = message;
+            errorMsg.classList.remove('hidden');
+            document.getElementById('success-message').classList.add('hidden');
+            window.scrollTo(0, 0); // Rola para o topo para ver a msg
+            setTimeout(() => errorMsg.classList.add('hidden'), 5000);
+        }
+
+        document.getElementById('form-parceria').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            if (GOOGLE_APP_SCRIPT_URL === 'COLE_A_SUA_URL_DO_APPS_SCRIPT_AQUI') {
+                showAlert('Configuração Incompleta', 'Por favor, adicione a URL do seu Google Apps Script no arquivo index.html.');
+                return;
+            }
+
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const payload = {
+                nome: formData.get('nome'),
+                email: formData.get('email'),
+                crm: formData.get('crm'),
+                trabalhaInjetaveis: formData.get('trabalha-injetaveis'),
+                linhaTratamento: formData.get('linha-tratamento'),
+                objetivoParceria: formData.get('objetivo-parceria'),
+                compraOutroLab: formData.get('compra-outro-lab'),
+                redesSociais: formData.get('redes-sociais'),
+                realizaMentoria: formData.get('realiza-mentoria'),
+                qtdAlunos: formData.get('qtd-alunos'),
+                periodicidadeAulas: formData.get('periodicidade-aulas'),
+                eSpeaker: formData.get('e-speaker')
+            };
+
+            // Validação simples
+            if (!payload.nome || !payload.email || !payload.crm || !payload.trabalhaInjetaveis || !payload.objetivoParceria) {
+                 showAlert('Campos Obrigatórios', 'Por favor, preencha todos os campos marcados com *.');
+                 return;
+            }
+
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.getElementById('button-text');
+            const loader = document.getElementById('loader');
+            
+            buttonText.textContent = 'Enviando...';
+            loader.classList.remove('hidden');
+            submitButton.disabled = true;
+            document.getElementById('error-message').classList.add('hidden');
+            document.getElementById('success-message').classList.add('hidden');
+
+            fetch(GOOGLE_APP_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Importante para evitar erros de CORS com Apps Script
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                document.getElementById('success-message').classList.remove('hidden');
+                form.reset();
+                mentoriaDetalhes.classList.add('hidden'); // Esconde campos condicionais
+                window.scrollTo(0, 0); // Rola para o topo
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('Erro no Envio', 'Ocorreu um erro ao enviar os dados. Verifique o console e a configuração do script.');
+            })
+            .finally(() => {
+                buttonText.textContent = 'Enviar Solicitação';
+                loader.classList.add('hidden');
+                submitButton.disabled = false;
+                setTimeout(() => {
+                    document.getElementById('success-message').classList.add('hidden');
+                }, 8000);
+            });
+        });
+    </script>
+</body>
+</html>
+
